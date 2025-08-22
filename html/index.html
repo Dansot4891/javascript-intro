@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link href="/css/main.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="black-bg">
+        <div class="white-bg">
+            <h4>로그인하세요</h4>
+            <button class="btn btn-danger" id="close">닫기</button>
+        </div>
+    </div> 
+
+
+    <div>
+        <button id="login">login</button>
+    </div>
+
+    <div>
+        <div class="alert-box" id="id">
+                <p id="title">아이디를 입력하세요</p>
+                <button id="close">X</button>
+            </div>
+        </div>
+
+        
+
+        <button onclick="setAlert('id', 'flex', '아이디를 입력하세요')">id</button>
+        <button onclick="setAlert('id', 'flex', '비밀번호를 입력하세요')">pw</button>
+
+        <div>
+            <ul>
+                <li>
+                    <div class="row">
+                        <p>Navbar</p>
+                        <i id="icon-h" class="fa-solid fa-home"></i>
+                    </div>
+                </li>
+                <li class="list-item">An item</li>
+                <li class="list-item">An second item</li>
+                <li class="list-item">An third item</li>
+                <li class="list-item">An fourth item</li>
+                <li class="list-item">An fifth item</li>
+            </ul>
+            
+        </div>
+
+        <p class="hello">안녕</p>
+        <p class="hello">안녕</p>
+        <p class="hello">안녕</p>
+        <h4>asdfasdfasdfsadf</h4>
+
+        <button id="test-btn">test</button>
+
+   
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        
+        // 알림 다이아로그 만들기
+        document.getElementById("login").addEventListener('click', function() {
+            document.querySelector('.black-bg').classList.toggle('show');
+        });
+
+        document.getElementsByClassName('btn btn-danger')[0].addEventListener('click', dialogToggle);
+
+        // document.getElementsByClassName('black-bg')[0].addEventListener('click', dialogToggle);
+
+        function dialogToggle(){
+            document.querySelector('.black-bg').classList.toggle('show');
+        }
+
+        // document.querySelector('.hello').innerHTML = 'stupid';
+        // jQuery
+        $('.hello').html('ssddd')
+        $('.hello').css('color', 'red')
+
+        const items = document.querySelectorAll('.hello')
+        items.forEach(item => {
+            item.innerHTML = 'stustupid'
+        })
+
+        // id는 #을, class는 .을 붙인다.
+        $('#test-btn').on('click', function() {
+            $('.hello').fadeOut();
+        });
+
+        
+        // ui 추가
+        function setDisplay(id, value) {
+            document.getElementById(id).style.display = value;
+        }
+
+        // ui 추가 및 텍스트 변경
+        function setAlert(id, value, text) {
+            document.getElementById(id).style.display = value;
+            document.getElementById("title").innerHTML = text;
+        }
+
+        // class
+        function byClassFunc(className) {
+            document.getElementsByClassName(className).style.display = value;
+        }
+
+        // event listener
+        document.getElementById('close').addEventListener('click', function () {
+            setDisplay('id', 'none');
+        });
+
+        // jQuery
+        $('close').on('click', function () {
+            setDisplay('id', 'none');
+        });
+
+
+        // 방법 1: querySelectorAll 사용 (추천)
+        document.getElementById('icon-h').addEventListener('click', function () {
+            const listItems = document.querySelectorAll('.list-item');
+            listItems.forEach(item => {
+                if (item.style.display === 'none') {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // document.getElementsById("icon-h").addEventListener('click', function(){
+        //     const listItems = document.querySelectorAll('.list-item');
+        //     listItems.forEach(item => {
+        //         if(item.style.display === 'none'){
+        //             item.add('show');
+        //         } else {
+        //             item.remove('show');
+        //         }
+        //     });
+        // });
+
+
+
+
+    </script>
+</body>
+
+</html>

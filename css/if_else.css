@@ -1,0 +1,23 @@
+.black-bg {
+  width : 100%;
+  height : 100%;
+  position : fixed;
+  background : rgba(0,0,0,0.5);
+  z-index : 5;
+  padding: 30px;
+  /* animation을 위해서 visibility 사용 */
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.4s;
+}
+
+.show{
+    visibility: visible;
+    opacity: 1;
+}
+
+.white-bg {
+  background: white;
+  border-radius: 5px;
+  padding: 30px;
+} 

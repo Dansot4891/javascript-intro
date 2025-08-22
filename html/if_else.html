@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="/css/if_else.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="black-bg">
+        <div class="white-bg">
+            <h4>로그인하세요</h4>
+            <form action="index.html">
+                <div class="id-tf">
+                    <input type="text">
+                </div>
+                <div class="pw-tf">
+                    <input type="text">
+                </div>
+                <button id="submit-btn" type="submit" class="btn btn-danger">전송</button>
+                <button id="cancel-btn" type="button">닫기</button>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <p>asdfasdf</p>
+        <button class="login">asdfsadf</button>
+    </div>
+
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <script>
+        $('.login').on('click', loginDialogToggle);
+
+        $('form').on('submit', function(e){
+            let idValue = $('.id-tf input').val();     // ID 입력값
+            let pwValue = $('.pw-tf input').val();     // PW 입력값
+            
+            if(idValue === '' || pwValue === '' || pwValue.length < 6){
+                if(!/\S+@\S+.\S+/.test(idValue)){
+                    alert('이메일 형식을 입력해주세요.');
+                    e.preventDefault();
+                    return;
+                }
+                e.preventDefault();
+                alert('입력값이 비어있습니다.');
+            }
+        });
+        
+        $('.id-tf').on('input', function(e) {
+            console.log(e);
+        })
+
+        $('#cancel-btn').on('click', loginDialogToggle);
+
+        function loginDialogToggle(){
+            $('.black-bg').toggleClass('show');
+        }
+
+
+        function threetwoone(val){
+            if(val % 3 === 0){
+                console.log("박수");
+            } else {
+                console.log("통과");
+            }
+        }
+
+        function threetwooneUpgrade(val){
+            if(val % 9 === 0){
+                console.log("박수x2");
+                return;
+            }
+            if(val % 3 === 0){
+                console.log("박수");
+            } else {
+                console.log("통과");
+            }
+        }
+
+        function isOk({val1, val2}){
+            if(val1 < 40 || val2 < 40){
+                console.log("불합격");
+                return;
+            }
+            if(val1 + val2 > 120){
+                console.log("합격");
+            } else {
+                console.log("불합격");
+            }
+
+        }
+    </script>
+</body>
+</html>

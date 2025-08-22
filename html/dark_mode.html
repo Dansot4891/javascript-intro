@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="/css/dark_mode.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="bg"></div>
+    <button class="dark">Dark 🔄</button>
+    <div class="ddd">5초 이내 구매시 사은품 증정!</div>
+
+    
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <script>
+        let num = 0;
+        let darkButton = document.getElementsByClassName("dark")[0]
+        document.getElementsByClassName("dark")[0].addEventListener('click', function () {
+            if(num % 2 == 0){
+                document.body.style.backgroundColor = "white"
+                darkButton.innerHTML = "Light 🔄";                
+            } else {
+                document.body.style.backgroundColor = "black"
+                darkButton.innerHTML = "Dark 🔄";
+            }
+            num++;
+        });
+
+        let value = 5;
+
+        function minus () {
+            value--;
+            if(value < 1){
+                $('.ddd').hide();
+                return;
+            }
+            let text = `${value}초 이내 구매시 사은품 증정!`;
+            document.getElementsByClassName('ddd')[0].innerHTML = text;
+        }
+
+        for(let i = 0; i < 5; i++){
+            setTimeout(minus, 1000 * (i + 1));  // 1초, 2초, 3초, 4초, 5초
+        }
+    </script>
+</body>
+</html>
+
+
+<script>
+    let age = 1;
+    const address = "서울";
+
+    var num1 = 60000;
+    var num2 = 10000;
+
+    function calulate(val){
+        var num3 = 1.15;
+        if(val > 50000){
+            num3 = 1.2;
+        }
+        val = val * num3 * num3;
+        console.log(val);
+    }
+    
+    calulate(num1)
+    calulate(num2)
+
+
+    function caculate2(val){
+        var value = 0;
+        value = val + val*3/2 + val*3/2*3/2;
+        console.log(val);
+    }
+
+    caculate2(360);
+</script>
