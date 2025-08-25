@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link href="/css/select_input.css" rel="stylesheet">
+</head>
+<body>
+    <form class="container my-5 form-group">
+        <p>상품선택</p>
+        <select id="product" class="form-select mt-2">
+            <option>모자</option>
+            <option>셔츠</option>
+        </select>
+
+        <select id="size-selector" class="form-select mt-2">
+        </select>
+
+        <div id="test"></div>
+
+        <script>
+
+            var shirtSizes = [28, 30, 32];
+            var capSizes = [48,50,52];
+            // 처음 초기화
+            checkProductSelection();
+
+            // 상품 선택이 변경될 때마다 체크
+            document.querySelector('#product').addEventListener('change', checkProductSelection);
+            
+            function checkProductSelection() {
+                const product = document.querySelector('#product');
+                const sizeSelector = document.querySelector('#size-selector');
+                
+                // 기존 옵션들 모두 삭제
+                sizeSelector.innerHTML = '';
+                
+                if(product.value === '모자'){
+                    capSizes.forEach(function(size){
+                        sizeSelector.innerHTML += `
+                            <option>${size}</option>
+                        `;
+                    });
+                } else if(product.value === '셔츠') {
+                    shirtSizes.forEach(function(size){
+                        sizeSelector.innerHTML += `
+                            <option>${size}</option>
+                        `;
+                    });
+                }
+            }
+            
+
+            // JS로 html 생성하는 방법 1
+            var a = document.createElement('p');
+            a.innerHTML = '안녕';
+            document.getElementById('test').appendChild(a);
+            // document.querySelector('#test').appendChild(a);
+
+            // JS로 html 생성하는 방법 2
+            var template = '<p>Hello</p>';
+            document.querySelector('#size-selector').insertAdjacentHTML('beforeend', template);
+        </script>
+</body>
+</html>
