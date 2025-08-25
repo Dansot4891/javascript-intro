@@ -1,0 +1,15 @@
+.slide-container{
+    width: 300vw;
+    transform: translateX(0);
+    transition: 1s;
+}
+
+.slide-box{
+    width: 100vw;    
+    height: 80vh;
+    float: left;
+}
+
+.slide-box img{
+    width: 100%;
+}
