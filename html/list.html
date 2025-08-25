@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+</head>
+<body>
+    <div class="card-group container">
+    </div>
+
+        <script>
+        var products = [
+            { id : 0, price : 70000, title : 'Blossom Dress' },
+            { id : 1, price : 50000, title : 'Springfield Shirt' },
+            { id : 2, price : 60000, title : 'Black Monastery' }
+        ];
+
+        for(let i=0; i<products.length; i++){
+            let product = products[i];
+            document.querySelector('.card-group').innerHTML += `
+                <div class="card">
+                    <img src="https://placehold.co/600">
+                    <div class="card-body">
+                    <h5>${product.title}</h5>
+                    <p>가격 : ${product.price}</p>
+                    <button class="btn btn-danger">주문하기</button>
+                    </div>
+                </div>
+        `
+        }
+        </script> 
+</body>
+</html>

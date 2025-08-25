@@ -56,6 +56,20 @@
             console.log(e);
         })
 
+        $('.black-bg').on('click', function(e){
+
+            // e.target;
+            // e.currentTarget;
+            // e.preventDefault();
+            // e.stopPropagation();
+            
+            // 이벤트 버블링 해결
+            if(e.target == document.querySelector('.black-bg')){
+                document.querySelector('.black-bg').classList.remove('show');
+            }
+
+        });
+
         $('#cancel-btn').on('click', loginDialogToggle);
 
         function loginDialogToggle(){
