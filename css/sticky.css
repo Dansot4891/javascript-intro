@@ -1,0 +1,15 @@
+.grey{
+    background-color: rgb(204, 204, 204);
+    height: 2000px;
+    margin-top: 500px;
+    display: flex;
+    align-items: flex-start; /* 꼭 필요 */
+}
+
+.image{
+    /* float: right;
+    width: 300px; */
+    position: sticky;
+    top: 100px;
+    align-self: flex-start; /* flex 아이템이 부모 높이에 맞춰 늘어나지 않게 */
+}

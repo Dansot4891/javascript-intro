@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="/css/carousel.css" rel="stylesheet">
+</head>
+<body>
+    <div id="quiz">
+        <h4>물에 빠지면 누구부터 구하시겠어요?</h4>
+        <button>노인</button>
+        <button>어린이</button>
+    </div>
+
+    <script>
+
+        document.querySelector('#quiz').addEventListener('click', function (e) {
+            switch(e.target.innerHTML){
+                case '노인':
+                    alert('당신덕에 어린이가 죽었습니다.');
+                    break;
+                case '어린이':
+                    alert('당신덕에 노인이 죽었습니다.');
+                    break;
+                default:
+                    alert('그 누구도 구하지 않으셨네요.');
+                    break;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -33,10 +33,10 @@
             dataSet.forEach((data) => {
                 document.querySelector('.row').innerHTML += `
                         <div class="col-sm-4">
-                            <img src="https://placehold.co/600" class="w-100">
+                            <img id=${data.id} src="https://placehold.co/600" class="w-100">
                             <h5>${data.title}</h5>
                             <p id="price">가격 : ${data.price}</p>
-                            <button id="${data.id}" class="btn btn-danger">구매</button>
+                            <button class="purchase-btn btn btn-danger">구매</button>
                         </div>
                 ` 
             });    
@@ -88,32 +88,45 @@
                 refetch(newProducts);
             });
 
-            // 6만원이하 필터링
-            document.getElementById('purchase-btn').addEventListener('click', function() {
-                
+            // 로컬 스토리지 저장 => 여러 개의 카드에 버튼이 있으므로 id가 아닌 class로 선언
+            document.querySelectorAll(".purchase-btn").forEach(btn => {
+                btn.addEventListener("click", function() {
+                    let productId = this.parentElement.querySelector("img").id;
+                    let product = products.find(p => p.id == productId);
+                    
+                    // 1) 로컬스토리지에서 기존 cart 불러오기 (없으면 빈 배열)
+                    let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+                    
+                    if(cart.find(p => p.id == productId) == null){
+                        // 2) 새로운 상품 추가
+                        cart.push(product);
+
+                        // 3) 다시 저장 (문자열로 변환)
+                        localStorage.setItem("cart", JSON.stringify(cart));
+                    }
+                });
             });
             
             /// url을 변수로 받아 서버로부터 데이터 조회
             async function fetchProducts(url){
                 let result = await fetch(url).then((res) => res.json()).then((p) => p).catch((e) => console.log(e));
-                products.push(...result); // ✅ 스프레드 연산자로 개별 항목들 추가
+                products.push(...result); // 스프레드 연산자로 개별 항목들 추가
                 return result;
             }
 
-            var arr = [1,2,3]
-            var newArr = JSON.stringify(arr);
+            // var arr = [1,2,3]
+            // var newArr = JSON.stringify(arr);
 
-            localStorage.setItem('이름', '임명우');
-            localStorage.setItem('newArr', newArr);
+            // localStorage.setItem('이름', '임명우');
+            // localStorage.setItem('newArr', newArr);
 
-            var nnArr = localStorage.getItem('newArr');
+            // var nnArr = localStorage.getItem('newArr');
 
-            sessionStorage.setItem('이름', '임명우');
-            sessionStorage.setItem('newArr', newArr);
+            // sessionStorage.setItem('이름', '임명우');
+            // sessionStorage.setItem('newArr', newArr);
 
-            var nnArr = localStorage.getItem('newArr');
+            // var nnArr = localStorage.getItem('newArr');
 
-            console.log(JSON.parse(nnArr)[0]);
         </script>
 </body>
 </html>

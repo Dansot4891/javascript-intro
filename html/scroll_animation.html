@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link href="/css/scroll_animation.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="card-bg">
+        <div class="card-box">
+            <img src="https://d2hxk0kgvzehcg.cloudfront.net/wp-content/uploads/2019/10/card1-1.png">
+        </div>
+        <div class="card-box">
+            <img src="https://d2hxk0kgvzehcg.cloudfront.net/wp-content/uploads/2019/10/card2-1.png">
+        </div>
+        <div class="card-box">
+            <img src="https://d2hxk0kgvzehcg.cloudfront.net/wp-content/uploads/2019/10/card3-1.png">
+        </div>
+    </div>
+   
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        $(window).scroll(function(){
+            var height = $(window).scrollTop();
+
+            // 500~1100
+        
+            var opacity = (-1/500) * height + 2.3;
+            var scale =  -0.0001 * height + 1.065;
+            scale = Math.min(scale, 1);   // 최대 1
+
+
+
+            document.getElementsByClassName('card-box')[0].style.opacity = opacity;
+            document.getElementsByClassName('card-box')[0].style.transform = `scale(${scale})`;
+        });
+    </script>
+</body>
+
+</html>

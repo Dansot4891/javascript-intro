@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/ex.css">
+</head>
+<body>
+    <div class="bg">
+        <div class="nav">
+            <div class="title">집꾸미기</div>
+            <p class="selected">Home</p>
+            <p>스토어</p>
+            <p>시공견적</p>
+        </div>
+        <div class="content">
+            <input class="search" placeholder="검색어입력">
+            <div class="row"></div>
+            <div class="cart">
+                <h3 style="margin-left: 12px; margin-bottom: 4px;">장바구니</h3>
+                <div class="drag-box">
+                    <h3>여기로 드래그</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let products = [];
+        let searchedProducts = [];
+        const cart = []; // 드롭된 상품을 담아둘 배열
+
+        const dropZone = document.querySelector('.drag-box');
+        
+        const navItems = document.querySelectorAll('.nav p');
+
+        // 장바구니 렌더링
+        function renderCart() {
+            dropZone.innerHTML = `
+            <h3 style="margin:0 0 8px;">여기로 드래그</h3>
+            <div class="row">
+                ${cart.map(p => `
+                <div class="card">
+                    <img src="${p.photo}" style="width:60px;height:auto;object-fit:cover;">
+                        <h3>${title}</h3>
+                        <p>${d.brand}</p>
+                        <p>${d.price}</p>
+                        <input value="1">
+                    </div>
+                </div>
+                `).join('')}
+            </div>
+            `;
+        }
+        
+        // 상단 네비게이션바
+        navItems.forEach(item => {
+            item.addEventListener('click', function() {
+                // 다른 p들에서 selected 제거
+                navItems.forEach(p => p.classList.remove('selected'));
+                // 클릭한 p에 selected 추가
+                this.classList.add('selected');
+            });
+        });
+
+        
+        
+        // 데이터 할당
+        function setData(list, keyword = '') {
+            const row = document.querySelector('.row');
+            row.innerHTML = list.map(d => {
+                let title = d.title;
+                if (keyword) {
+                    const regex = new RegExp(`(${keyword})`, 'gi');
+                    title = title.replace(regex, '<mark>$1</mark>');
+                }
+
+                return `
+                <div id=${d.id} class="card" draggable="true">
+                    <img src="${d.photo}">
+                    <h3>${title}</h3>
+                    <p>${d.brand}</p>
+                    <p>가격 : ${d.price}</p>
+                    <button class="btn">담기</button>
+                </div>
+                `;
+            }).join('');
+        }
+
+        // 데이터 조회
+        function fetchProducts(){
+            fetch('/data/ex/store.json')
+            .then(response => response.json())
+            .then((dataSet) => {
+                products = dataSet.products;
+                setData(products);
+            })
+            .catch(error => console.error(error));
+        }
+
+        // 실시간 검색
+        document.querySelector('.search').addEventListener('input', (e) => {
+            const q = e.target.value.trim().toLowerCase();
+            if (!products.length) return;
+
+            if (q === '') {
+                setData(products); // 키워드 없음
+                return;
+            }
+
+            const searchedProducts = products.filter(p =>
+                (p.title || '').toLowerCase().includes(q)
+            );
+
+            setData(searchedProducts, q); // highlight 키워드 전달
+        });
+
+        // ------- Drag & Drop (이벤트 위임) -------
+        // 카드 드래그 시작: id 전달
+        document.addEventListener('dragstart', (e) => {
+            const card = e.target.closest('.card');
+            if (!card) return;
+            e.dataTransfer.setData('text/plain', card.dataset.id);
+            // (선택) 드래그 미리보기 깔끔하게
+            // e.dataTransfer.setDragImage(card, card.offsetWidth/2, card.offsetHeight/2);
+        });
+
+        // 드롭존 활성/비활성
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault(); // drop 허용
+            dropZone.classList.add('over');
+        });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('over'));
+
+        // 드롭 처리: id로 상품 찾아 cart에 추가 후 렌더
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('over');
+            const id = e.dataTransfer.getData('text/plain');
+            const item = products.find(p => String(p.id) === String(id));
+            if (!item) return;
+
+            // 중복 추가를 막고 싶다면:
+            if (!cart.find(p => p.id === item.id)) {
+            cart.push(item);
+            console.log(cart);
+            renderCart();
+            }
+        });
+
+        fetchProducts();
+
+
+    </script>
+</body>
+</html>
+
+<!-- {
+      "id": 0,
+      "title": "식기세척기",
+      "brand": "세척나라",
+      "photo": "/data/ex/pr1.JPG",
+      "price": 10000
+    }, -->

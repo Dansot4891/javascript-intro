@@ -1,7 +1,8 @@
 .slide-container{
     width: 300vw;
     transform: translateX(0);
-    transition: 1s;
+    cursor:grab;
+    height: 300px;
 }
 
 .slide-box{

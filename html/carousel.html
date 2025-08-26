@@ -29,39 +29,69 @@
     <button class="next">다음</button>
 
     <script>
+        const slider = document.querySelector('.slide-container');
+        const slides = document.querySelectorAll('.slide-box');
+        const len = slides.length;
 
-        const slider = document.getElementsByClassName('slide-container')[0];
-        const sliderLength = document.getElementsByClassName('slide-box').length;
-        let currentSlide = 0;
-        
-        document.getElementsByClassName("slide-1")[0].addEventListener('click', function() {
-            slide(0);  // 인덱스만 전달
-        });
+        let current = 0;          // 현재 인덱스
+        let baseX = 0;            // 현재 인덱스의 기준 위치(px)
+        let startX = 0;           // 드래그 시작 좌표
+        let deltaX = 0;           // 이동량
+        let dragging = false;
 
-        document.getElementsByClassName("slide-2")[0].addEventListener('click', function() {
-            slide(1);  // 인덱스만 전달
-        });
-
-        document.getElementsByClassName("slide-3")[0].addEventListener('click', function() {
-            slide(2);  // 인덱스만 전달
-        });
-
-        document.getElementsByClassName("previous")[0].addEventListener('click', function() {
-            if(currentSlide > 0) {
-                slide(currentSlide - 1);
-            }
-        });
-
-        document.getElementsByClassName("next")[0].addEventListener('click', function() {
-            if(currentSlide < sliderLength - 1) {
-                slide(currentSlide + 1);
-            }
-        });
-
-        function slide(index) {  // 매개변수 하나만 받음
-            currentSlide = index;
-            slider.style.transform = `translateX(${-index * 100}vw)`;
+        function snap(i){
+            current = Math.max(0, Math.min(i, len-1));
+            baseX = -current * window.innerWidth;
+            slider.style.transition = 'transform .3s ease';
+            slider.style.transform = `translateX(${baseX}px)`;
         }
+
+        // 초기 위치
+        snap(0);
+
+        // 버튼
+        document.querySelector('.slide-1').onclick = ()=>snap(0);
+        document.querySelector('.slide-2').onclick = ()=>snap(1);
+        document.querySelector('.slide-3').onclick = ()=>snap(2);
+        document.querySelector('.previous').onclick = ()=>snap(current-1);
+        document.querySelector('.next').onclick = ()=>snap(current+1);
+
+        // 공용 핸들러 (mouse + touch)
+        const getX = e => (e.touches ? e.touches[0].clientX : e.clientX);
+
+        function onDown(e){
+            dragging = true;
+            startX = getX(e);
+            deltaX = 0;
+            slider.style.transition = 'none';
+            // 기준 위치는 현재 스냅된 baseX 사용
+            e.preventDefault(); // 이미지 기본 드래그 방지
+        }
+
+        function onMove(e){
+            if(!dragging) return;
+            deltaX = getX(e) - startX;
+            slider.style.transform = `translateX(${baseX + deltaX}px)`;
+        }
+
+        function onUp(){
+            if(!dragging) return;
+            dragging = false;
+            const threshold = window.innerWidth * 0.15; // 15% 넘게 끌면 페이지 전환
+            if(deltaX >  threshold) snap(current-1);
+            else if(deltaX < -threshold) snap(current+1);
+            else snap(current); // 원위치
+        }
+
+        // 컨테이너에만 이벤트 (개별 .slide-box에 걸 필요 없음)
+        slider.addEventListener('mousedown', onDown);
+        window.addEventListener('mousemove', onMove);
+        window.addEventListener('mouseup', onUp);
+
+        // 터치 지원
+        slider.addEventListener('touchstart', onDown, {passive:false});
+        window.addEventListener('touchmove', onMove, {passive:false});
+        window.addEventListener('touchend', onUp);
     </script>
 </body>
 </html>
